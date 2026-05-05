@@ -7,27 +7,28 @@ from routes.task_routes import router as task_router
 from routes.project_routes import router as project_router
 
 
+
 app = FastAPI()
+
 
 
 Base.metadata.create_all(bind=engine)
 
 
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "https://dazzling-caring-production-0401.up.railway.app",
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],   
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ✅ routes
+
 @app.get("/")
 def home():
     return {"message": "Backend is running 🚀"}
+
 
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(project_router, prefix="/projects", tags=["Projects"])
